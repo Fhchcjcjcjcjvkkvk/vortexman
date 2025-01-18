@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Self-Destruction Timer</title>
+    <style>
+        /* Add a fade-in animation to the page */
+        body {
+            animation: fadeIn 1s ease-in-out;
+        }
+
+        h1 {
+            animation: slideIn 1s ease-out;
+        }
+
+        p {
+            animation: fadeIn 2s ease-out;
+        }
+
+        form {
+            animation: bounceIn 1.5s ease-in-out;
+        }
+
+        input[type="radio"] {
+            animation: fadeIn 2s ease-in-out;
+        }
+
+        input[type="submit"] {
+            animation: pulse 1.5s infinite;
+        }
+
+        /* Keyframes for the animations */
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+            }
+            to {
+                opacity: 1;
+            }
+        }
+
+        @keyframes slideIn {
+            from {
+                transform: translateX(-100%);
+                opacity: 0;
+            }
+            to {
+                transform: translateX(0);
+                opacity: 1;
+            }
+        }
+
+        @keyframes bounceIn {
+            0% {
+                transform: scale(0);
+                opacity: 0;
+            }
+            60% {
+                transform: scale(1.1);
+                opacity: 1;
+            }
+            100% {
+                transform: scale(1);
+            }
+        }
+
+        @keyframes pulse {
+            0% {
+                transform: scale(1);
+                opacity: 1;
+            }
+            50% {
+                transform: scale(1.1);
+                opacity: 0.8;
+            }
+            100% {
+                transform: scale(1);
+                opacity: 1;
+            }
+        }
+    </style>
+</head>
+<body>
+    <h1>Self-Destruction Timer</h1>
+    <p>Choose a timer to delete all messages:</p>
+
+    <!-- Display the video -->
+    <video autoplay loop muted style="width: 160px; height: 160px; animation: fadeIn 3s ease-in-out;">
+        <source src="vbox.webm" type="video/webm">
+        Your browser does not support the video tag.
+    </video>
+
+    <form action="{{ url_for('self_destruction') }}" method="POST">
+        <input type="radio" id="2s" name="destruction_time" value="2">
+        <label for="2s">2 Seconds</label><br>
+        <input type="radio" id="30s" name="destruction_time" value="30">
+        <label for="30s">30 Seconds</label><br><br>
+        <input type="submit" value="Activate Self-Destruction Timer">
+    </form>
+
+    {% if destruction_time %}
+        <p>Self-destruction timer activated for {{ destruction_time }} seconds.</p>
+        <p>Please wait while all messages are being deleted...</p>
+    {% endif %}
+</body>
+</html>
